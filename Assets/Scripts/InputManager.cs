@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
@@ -13,30 +12,46 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        HandleSpaceInput();
+        HandleMovementInput();
+        HandleResetInput();
+    }
+
+    private void HandleSpaceInput()
+    {
         // Check if the space key is pressed down
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Invoke the OnSpacePressed event
             OnSpacePressed?.Invoke();
         }
+    }
 
+    private void HandleMovementInput()
+    {
         // Initialize movement input vector
         Vector2 input = Vector2.zero;
+
         // Check if the A key is held down
         if (Input.GetKey(KeyCode.A))
         {
             // Add left direction to input vector
             input += Vector2.left;
         }
+
         // Check if the D key is held down
         if (Input.GetKey(KeyCode.D))
         {
             // Add right direction to input vector
             input += Vector2.right;
         }
+
         // Invoke the OnMove event with the input vector
         OnMove?.Invoke(input);
+    }
 
+    private void HandleResetInput()
+    {
         // Check if the R key is pressed down
         if (Input.GetKeyDown(KeyCode.R))
         {
