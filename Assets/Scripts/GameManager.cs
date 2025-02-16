@@ -10,12 +10,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private BallController ball;
     [SerializeField] private GameObject pinCollection;
-
     [SerializeField] private Transform pinAnchor;
-
     [SerializeField] private InputManager inputManager;
-
-
 
     private void Start()
     {
@@ -28,13 +24,11 @@ public class GameManager : MonoBehaviour
 
         inputManager.OnResetPressed.AddListener(HandleReset);
         SetPins();
-
     }
 
     private void IncrementScore()
     {
         score++;
-
         scoreText.text = $"Score: {score}";
     }
 
@@ -46,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void SetPins()
     {
-        if (pinObjects)
+        if (pinObjects != null)
         {
             foreach (Transform child in pinObjects.transform)
             {
@@ -54,17 +48,13 @@ public class GameManager : MonoBehaviour
             }
             Destroy(pinObjects);
         }
-        pinObjects = Instantiate(pinCollection, pinAnchor.transform.position, Quaternion.identity, transform);
 
+        pinObjects = Instantiate(pinCollection, pinAnchor.position, Quaternion.identity, transform);
         pins = FindObjectsByType<FallTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
         foreach (FallTrigger pin in pins)
         {
             pin.OnPinFall.AddListener(IncrementScore);
         }
-
-
     }
-
-
 }
